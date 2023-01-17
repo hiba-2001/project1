@@ -1,0 +1,39 @@
+{% extends 'admin_page.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">NOTIFICATION DETAILS</h4>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>SI NO</th>
+                            <th>DATE</th>
+                            <th>MESSAGE</th>
+                            <th>UPDATE/DELETE</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for i in data %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{i.date}}</td>
+                          <td>{{i.message}}</td>
+
+                          <td><a class="btn btn-success" href="{% url 'noti_update' i.id %}">UPDATE</a>
+                          <a class="btn btn-danger" href="{% url 'noti_delete' i.id %}">DELETE</a></td>
+                          <td>
+
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+{% endblock %}

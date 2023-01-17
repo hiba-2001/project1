@@ -1,0 +1,41 @@
+{% extends 'parent_page.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">HOSTEL DETAILS</h4>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>SI NO</th>
+                            <th>HOSTEL NAME</th>
+                            <th>LOCATION</th>
+
+                            <th>ROOM FECILITIES</th>
+                            <th>CONTACT NO</th>
+                            <th>HOSTEL_IMAGE</th>
+
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for i in data %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{i.hostel_name}}</td>
+                          <td>{{i.location}}</td>
+                          <td>{{i.fee_details}}</td>
+                          <td>{{i.room_fecilities}}</td>
+                          <td>{{i.contact_no}}</td>
+                          <td><img src="{{i.hostel_image.url}}"></td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'admin_page.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">PAYMENT DETAILS</h4>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>SI NO</th>
+                            <th>STUDENT NAME</th>
+                            <th>FROM DATE</th>
+
+                            <th>TO DATE</th>
+                            <th>ROOM RENT</th>
+                            <th>MESS BILL</th>
+                            <th>AMOUND</th>
+
+                              <th>PAYMENT STATUS</th>
+                          <th>UPDATE/DELETE</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for i in data %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{i.studentname}}</td>
+                           <td>{{i.from_date}}</td>
+                           <td>{{i.to_date}}</td>
+                          <td>{{i.room_rent}}</td>
+                          <td>{{i.mess_bill}}</td>
+                          <td>{{i.amount}}</td>
+                            <td>
+                              {% if i.paymentstatus == 0 %}
+                              <a class="btn btn-warning" href="#">PENDING</a>
+                              {% elif i.paymentstatus == 1 %}
+                              <p class="btn btn-success">PAID</p>
+                              {% elif i.paymentstatus == 2 %}
+                              <p class="btn btn-warning">NOT PAID</p>
+                              {% endif %}
+
+                          </td>
+                            <td><a class="btn btn-success" href="{% url 'payment_update' i.id %}">UPDATE</a>
+                          <a class="btn btn-danger" href="{% url 'payment_delete' i.id %}">DELETE</a></td>
+
+
+
+
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+{% endblock %}

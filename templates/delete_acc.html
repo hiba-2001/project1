@@ -1,0 +1,18 @@
+{% extends 'student_page.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+     <div class="card" style="width: 25rem;margin:auto;">
+    <div class="card-body">
+       <form method="post" enctype="multipart/form-data"><center>
+           {% csrf_token %}
+           {{form|crispy}}
+
+          <h4>Are You Sure You Want To Delete This Account?</h4>
+          <br><a class="btn btn-primary" href="{% url 'view_studprofile' %}">Cancel</a>
+           <button type="submit" class="btn btn-danger" >Delete</button></center>
+       </form>
+    </div>
+</div>
+
+{% endblock %}
