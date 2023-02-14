@@ -1,4 +1,5 @@
 import re
+from datetime import date
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -31,25 +32,25 @@ class Student_Form(forms.ModelForm):
     class Meta:
         model = Student_registration
         exclude = ("user","approval_status",)
-def clean_email(self):
-    mail = self.cleaned_data["email"]
-    parent_email = Parent_registration.objects.filter(email=mail)
-    student_email = Student_registration.objects.filter(email=mail)
-    if parent_email.exists():
-        raise forms.ValidationError("this email already registered")
-    if student_email.exists():
-        raise forms.ValidationError("this email already registered")
-    return mail
+    def clean_email(self):
+        mail = self.cleaned_data["email"]
+        parent_email = Parent_registration.objects.filter(email=mail)
+        student_email = Student_registration.objects.filter(email=mail)
+        if parent_email.exists():
+            raise forms.ValidationError("this email already registered")
+        if student_email.exists():
+            raise forms.ValidationError("this email already registered")
+        return mail
 
-def clean_phone_no(self):
-    phone = self.cleaned_data["email"]
-    parent_phone_no = Parent_registration.objects.filter(phone_no=phone)
-    student_phone_no = Student_registration.objects.filter(phone_no=phone)
-    if parent_phone_no.exists():
-        raise forms.ValidationError("this email already registered")
-    if student_phone_no.exists():
-        raise forms.ValidationError("this email already registered")
-    return phone
+    def clean_phone_no(self):
+        phone = self.cleaned_data["email"]
+        parent_phone_no = Parent_registration.objects.filter(phone_no=phone)
+        student_phone_no = Student_registration.objects.filter(phone_no=phone)
+        if parent_phone_no.exists():
+           raise forms.ValidationError("this email already registered")
+        if student_phone_no.exists():
+           raise forms.ValidationError("this email already registered")
+        return phone
 
 
 
@@ -63,6 +64,25 @@ class Parent_Form(forms.ModelForm):
         fields = "__all__"
         exclude = ("user","approval_status",)
 
+    def clean_email(self):
+        mail = self.cleaned_data["email"]
+        parent_email = Parent_registration.objects.filter(email=mail)
+        student_email = Student_registration.objects.filter(email=mail)
+        if parent_email.exists():
+            raise forms.ValidationError("this email already registered")
+        if student_email.exists():
+            raise forms.ValidationError("this email already registered")
+        return mail
+
+    def clean_phone_no(self):
+        phone = self.cleaned_data["email"]
+        parent_phone_no = Parent_registration.objects.filter(phone_no=phone)
+        student_phone_no = Student_registration.objects.filter(phone_no=phone)
+        if parent_phone_no.exists():
+            raise forms.ValidationError("this email already registered")
+        if student_phone_no.exists():
+            raise forms.ValidationError("this email already registered")
+        return phone
 class Hostel_form(forms.ModelForm):
     contact_no = forms.CharField(validators=[phone_number_validator])
     class Meta:
@@ -88,6 +108,13 @@ class Payment_form(forms.ModelForm):
         model = Payment
         exclude = ("paymentstatus",)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        from_date = cleaned_data.get("from_date")
+        to_date = cleaned_data.get("to_date")
+        if to_date < from_date:
+            raise forms.ValidationError("to_date should be greater than from_date")
+
 att_choice=(
     ('present','present'),
     ('absent','absent')
@@ -99,6 +126,12 @@ class Attendance_form(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = "__all__"
+
+    def clean(self):
+        cleaned_data = super().clean()
+        date = cleaned_data.get("date")
+        if date != date.today():
+            raise forms.ValidationError("date should be today")
 
 
 class Staff_form(forms.ModelForm):
@@ -114,12 +147,25 @@ class Notification_form(forms.ModelForm):
         model = Notification
         fields = "__all__"
 
+    def clean(self):
+        cleaned_data = super().clean()
+        date = cleaned_data.get("date")
+        if date != date.today():
+            raise forms.ValidationError("date should be today")
+
 
 class Complaint_form(forms.ModelForm):
     date = forms.DateField(widget=DateInput)
     class Meta:
         model = Complaint
         exclude = ('replay','user',)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        date = cleaned_data.get("date")
+        if date != date.today():
+            raise forms.ValidationError("date should be today")
+
 
 class Repaly_form(forms.ModelForm):
 
@@ -142,3 +188,12 @@ class Booking_form(forms.ModelForm):
         model = Booking
         fields = "__all__"
         exclude = ('status',)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        booking_date = cleaned_data.get("booking_date")
+        date_joining = cleaned_data.get("date_joining")
+        if date_joining < booking_date:
+            raise forms.ValidationError("date_joining should be greater than booking_date.")
+        if booking_date != date.today():
+            raise forms.ValidationError("booking date should be today")

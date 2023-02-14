@@ -18,7 +18,8 @@ def view_parent_noti(request):
 
 @login_required(login_url='login_page')
 def view_parent_att(request):
-    data=Attendance.objects.all()
+    u = Parent_registration.objects.get(user=request.user)
+    data = Attendance.objects.filter(studentname=u.student_name)
     return render(request, 'view_parent_att.html', {'data': data})
 
 @login_required(login_url='login_page')
@@ -28,7 +29,8 @@ def view_parent_staff(request):
 
 @login_required(login_url='login_page')
 def view_parent_pay(request):
-    data=Payment.objects.all()
+    u = Parent_registration.objects.get(user=request.user)
+    data =Payment.objects.filter(studentname=u.student_name)
     return render(request, 'view_parent_pay.html', {'data': data})
 
 @login_required(login_url='login_page')
@@ -38,7 +40,8 @@ def view_parent_fee(request):
 
 @login_required(login_url='login_page')
 def view_parent_booking(request):
-    data=Booking.objects.all()
+    u = Parent_registration.objects.get(user=request.user)
+    data = Booking.objects.filter(name=u.student_name)
     return render(request, 'view_parent_booking.html', {'data': data})
 
 

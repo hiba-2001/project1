@@ -6,7 +6,7 @@
        <form method="post" enctype="multipart/form-data">
            {% csrf_token %}
            {{form|crispy}}
-           <button type="submit" id="submit" class="btn btn-primary" href="{% url 'view_attendanc' %}">Submit</button></center>
+           <button type="submit" id="submit" class="btn btn-primary" href="{% url 'view_attendance' %}">Submit</button></center>
        </form>
     </div>
 </div>

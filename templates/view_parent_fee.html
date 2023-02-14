@@ -10,13 +10,13 @@
                       <thead>
                         <tr>
                           <th>SI NO</th>
-                            <th>STUDENT NAME</th>
-                            <th>FROM DATE</th>
-                            <th>TO DATE</th>
+                            <th>HOSTEL NAME</th>
+
+
                             <th>MESS BILL</th>
                             <th>ROOM RENT</th>
                             <th>TOTAL AMOUNT</th>
-                           <th>PAYMENT</th>
+
 
                         </tr>
                       </thead>
@@ -24,13 +24,13 @@
                       {% for i in data %}
                         <tr>
                           <td>{{forloop.counter}}</td>
-                          <td>{{i.studentname}}</td>
-                          <td>{{i.from_date}}</td>
-                          <td>{{i.to_date}}</td>
+                          <td>{{i.hostel_name}}</td>
+<!--                          <td>{{i.from_date}}</td>-->
+<!--                          <td>{{i.to_date}}</td>-->
                           <td>{{i.mess_bill}}</td>
                            <td>{{i.room_rent}}</td>
                           <td>{{i.amount}}</td>
-                             <td><a class="btn btn-success" href="{% url 'add_payment' %}">PAY NOW</a>
+
 
                         </tr>
                       {% endfor %}

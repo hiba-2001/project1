@@ -88,10 +88,9 @@ class Attendance(models.Model):
         return self.status
 
 class Staff(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     age = models.IntegerField()
     contact_no = models.IntegerField()
-
 
     def __str__(self):
         return self.contact_no
